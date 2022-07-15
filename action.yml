@@ -1,0 +1,32 @@
+name: 'Retag'
+description: 'Remote tag a Docker image'
+inputs:
+  previous-tag:
+    description: 'A Docker image tag that identifies the image to retag'
+    required: true
+  new-tags:
+    description: 'A space separated list of Docker tags that will be applied to the image'
+    required: true
+  server:
+    description: 'The hostname of the Docker registry server'
+    required: false
+    default: 'ghcr.io'
+  username:
+    description: 'A user that has read and write access to the remote registry'
+    required: true
+  password:
+    description: 'The password for this user'
+    required: true
+  image:
+    description: 'The name of the Docker image on the remote registry'
+    required: true
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.previous-tag }}
+    - ${{ inputs.new-tags }}
+    - ${{ inputs.server }}
+    - ${{ inputs.username }}
+    - ${{ inputs.password }}
+    - ${{ inputs.image }}
